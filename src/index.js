@@ -38,8 +38,39 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+ 
+  let codeWords = Array.from(expr); //?
+  let res = [];
+  let a = 0;
+  let b = 10;
+  for (i = 0; i < codeWords.length / 10; i = i+1) {
+    res.push(codeWords.slice(a, b).join('')); //?
+    a = a + 10;
+    b = b + 10;
+   
+  }
+
+  const result = res.map((e) => (e !== "**********" ? e.replace(/^[^1]+/, '') : e))
+  .map((e) =>   (e === "**********" ? " " : e));//?
+
+  
+
+  let morseCode = result.map((item) => 
+  item.match(/.{1,2}/g)
+  .map((elem) => {
+    if(elem === '10') return '.';//?
+    if(elem === '11') return '-';//?
+    
+    return elem;//?
+     }).join('')//?
+    
+  );
+  
+return morseCode.map((elem) => 
+    (elem !== ' '? MORSE_TABLE[elem]: elem))//?
+  .join("")// ?
 }
+
 
 module.exports = {
     decode
